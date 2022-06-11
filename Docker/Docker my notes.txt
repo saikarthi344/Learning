@@ -1,0 +1,127 @@
+						          		Docker
+
+Docker is create the virtualization machineS
+
+STRUCUTRE PF DOCKER 
+
+DEVOPLER-- DOCKERFILE -- DOCKER DEMON -- DOKERHUB -- PULL--- DOCKER IMAGE --CONTAINER
+				
+ ***Install of Docker ***
+
+ yum install docker -y
+service docker start  -to start the docker service 
+
+Docker have images and containers
+*what is images ? 
+Image is nothing but a os
+
+*what is containers ?
+Containers are the we can install packages
+
+*Image  inside the  we have lot of containers
+
+* WE HAVE  THREE WAYS TO CREATE THE IMAGES
+1] we can pull from docker hub
+2] first we have to create a container and the we can create the images
+3] we use the Dockerfile and inside we use some commands
+
+ 		1]   We can pull from docker hub?
+		
+  WE HAVE TO GO THE DOCKER HUB -- https://hub.docker.com/search?q=ubantu&type=image {USE THIS  LINK}
+
+		 ******RUN THIS COMMAND*****
+ docker run -it  --name kartheek ubuntu /bin/bash  
+    i         ---internal
+    t 	      ---terminal
+    /bin/bash --- is shell its is a os file   
+ --name kartheek --its is conainer name tag
+                    
+		2] first we have to create a container and the we can create the images ?
+
+   step-1 docker run -it  --name kartheek ubuntu /bin/bash
+   create the container first and then
+ step-2 ****docker commit kartheek  newimage  **** 
+commit --- is create the images
+kartheek -- is a container already create in first step
+newimage  --- is a image name 
+
+		3] we use the Dockerfile and inside we use some commands
+ step -1  --- vi Dockerfile **** D must be capital letter ***
+ step -2    we have commannds inside of Dockerfile
+          #FROM           ==== 	     Base image 
+	      #RUN            ====    	 Excute the command and create
+          #MAINTAINER     ====       owner/description
+          #COPY           ====       local machines files only copy
+          #ADD            ====       download files from internet or extact files or unzip files
+          #EXPOSE         ====       about ports
+          #WORKDIR        ====       where we work 
+          #CMD  		  ====       Excute the commands but container creation   
+ 	      #ENV            ====       Enviroment variables
+
+For example  go to    vi Dockerfile 
+	FROM    ubuntu  == os is ubuntu 
+        WORKDIR	 /tmp   === files are in tmp in base dircetory  
+        RUN   echo 'hello every one' > /tmp/kartheekfiles    == In tmp we are created 
+	COPY  testfile /tmp
+     	ADD   test.tar.gz /tmp
+	
+
+:wq!
+
+***** Run the command  *****
+
+   Docker build -t newimage .  
+  -t ---tagname 
+   . --- current path 
+			THEN IMAGE IS CREATED 
+
+ 		****VOLUMES***
+
+  docker run -it --name container1  -v/myvolumes ubuntu /bin/bash
+     container1  # cd   my volumes
+     container1  #touch file1 file2
+exit
+
+root-ec2-user # docker run -it  --name container2  --privileged=true --volumes-from container2 ubuntu /bin/bash
+       container2 # ls /
+       container2 # cd my volumes
+ file1 file2
+ exit
+     				**HOST**
+docker run -it --name  host /home/ec2-user:/sai --privileged=true ubuntu /bin/bash
+
+ 					****PORTS *** 
+ docker run -dt --name webcontainer -p 80:80  ubunutu /bin/bash
+ dt dettach terminal [process start automatically start]
+
+  docker exec -it webcontianer 
+  ubuntu commands apt-get update -y
+                  apt-get install appache2
+ 		  cd var/www/html/ echo 'hello kartheek' > sai
+ aws pubilc ip address copy and add 12.32.2323.1 /80/sai
+  hello kartheek
+  	
+			****Docker Hub*****
+  
+you have sign up with dockerhuub account
+ and then docker login  userid: pendikatlask  	
+                        passward: pendikatlask@344
+ sucessfully login
+  
+docker tag newimage pendikatlask/project1
+           images    login id   / name of rh project
+       
+docker push  pendikatlask/project1
+docker pull  pendikatlask/project2  
+automatical it will be push to your docker account
+ 
+  		*****BASIC COMMANDS******
+docker ps -a  process status -all
+docker ps    process status
+docker images -show what we have images
+docker rm  to delete the containers
+docker rmi  to delete the images
+
+docker start container1   to start the service  container1
+docker attach container1   go to the container root
+
